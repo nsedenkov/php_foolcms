@@ -9,19 +9,25 @@ class Engine extends Router {
 
     private $_page_file = null;
     private $_error = null;
+    private $request_uri = null;
+    private $url_info = null;
 
     public function __construct() {
         parent::__construct();
-        if (isset($_GET["page"])) { //Если открыта какая-нибудь страница
-            //Записываем в переменную алиас (из GET запроса)
-            $dir = $_GET["page"];
+        $this->request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $this->url_info = parse_url($this->request_uri);
+        $uri = urldecode($this->url_info['path']);
+        file_put_contents('foollog.txt', $this->request_uri);
+        file_put_contents('foollog.txt', $this->url_info);
+        file_put_contents('foollog.txt', $uri);
+        if ($uri != '/') { //Если открыта какая-нибудь страница
             //Небольшая защита
-            $dir = str_replace(".", null, $dir);
-            $dir = str_replace("/", null, $dir);
-            $dir = str_replace("", null, $dir);
+            $uri = str_replace(".", null, $uri);
+            $uri = str_replace("/", null, $uri);
+            $uri = str_replace("", null, $uri);
 
             //разрешаем маршрут в имя шаблона
-            $this->_page_file = $this->getRoute($dir);
+            $this->_page_file = $this->getRoute($uri);
 
         }
          //Если в GET запросе нет переменной page, то открываем главную

@@ -29,7 +29,9 @@ class Router {
      */
     private function readRoutes() {
         /* TODO: не хардкодить параметры соединения */
-        $mysqli = new mysqli("localhost", "u597389257_fcms", "XsHU:#gGk74th!V", "u597389257_fool");
+        $json = file_get_contents('dbcfg.json');
+        $dbp = json_decode($json, true);
+        $mysqli = new mysqli("localhost", $dbp['user'], $dbp['pswd'], $dbp['dbnm']);
         if ($mysqli->connect_errno) {
             echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
@@ -69,6 +71,14 @@ class Router {
         else return false; //Если маршрут не задан
 
         return true;
+    }
+
+    public function getAllRoutes() {
+        $res = null;
+        foreach($this->_route as $one) {
+            $res .= $one;
+        }
+        return $res;
     }
 }
 
