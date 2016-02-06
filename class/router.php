@@ -28,7 +28,6 @@ class Router {
      * objects.type -> page
      */
     private function readRoutes() {
-        /* TODO: не хардкодить параметры соединения */
         $json = file_get_contents('dbcfg.json');
         $dbp = json_decode($json, true);
         $mysqli = new mysqli("localhost", $dbp['user'], $dbp['pswd'], $dbp['dbnm']);
@@ -50,10 +49,10 @@ class Router {
             return "front-page";
         }
         elseif($this->_route[trim($dir, "/")]){
-            return "page-" . $this->_route[trim($dir, "/")];
+            return $this->_route[trim($dir, "/")];
         }
         else{
-            return "FOOL_ROUTE_ERROR";
+            return "_404";
         }
     }
 

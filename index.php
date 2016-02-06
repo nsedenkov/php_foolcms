@@ -12,8 +12,7 @@ if ($engine->getError()) { //Если возникли ошибки, вывод�
     echo "<div style='border:1px solid red;padding:10px;margin: 10px auto;
         width: 500px;'>" . $engine->getError() . "</div>";
 }
-echo $engine->getAllRoutes();
-echo $engine->getContentPage(); //Выводим страницы сайта
+include_once $engine->getContentPage(); //Выводим страницы сайта
 
 include_once "templates/footer.php";//Подключаем подвал сайта
 ?>

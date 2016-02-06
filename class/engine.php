@@ -55,7 +55,8 @@ class Engine extends Router {
      * Возвращает текст открытой страницы
      */
     public function getContentPage() {
-        return file_get_contents("templates/" . $this->_page_file . ".php");
+        $res = "templates/" . $this->_page_file . ".php";
+        return $res;
     }
 
 }
