@@ -5,7 +5,6 @@
  */
 class Router {
     private $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
-    private $_names = array(); //Переменная хранит "человеческие" имена страниц
 
     public function __construct(){
         $this->readRoutes();
@@ -17,9 +16,11 @@ class Router {
      * @param <string> $file - адрес файла
      * @param <string> $name - "человеческое" имя страницы
      */
-    private function setRoute($dir, $file, $name) {
-        $this->_route[trim($dir, "/")] = $file;
-        $this->_names[trim($dir, "/")] = $name;
+    private function setRoute($dir, $file, $name, $id, $pid) {
+        $this->_route[trim($dir, "/")] = array ("file" => $file,
+                                                "name" => $name,
+                                                "id" => $id,
+                                                "pid" => $pid);
     }
 
     /**
@@ -35,13 +36,16 @@ class Router {
             echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
         else {
-            $res = $mysqli->query('SELECT id,parent_id,name,alias,template FROM objects WHERE type=\'page\'');
+            // Добавить в таблицу objects поле order - порядок отображения в меню (на своем уровне)
+            $res = $mysqli->query('SELECT id,parent_id,name,alias,template,order FROM objects WHERE type=\'page\' 
+                                   ORDER BY parent_id, order');
             if ($res->num_rows > 0){
                 while($row = $res->fetch_assoc()){
-                    $this->setRoute($row['alias'], $row['template'], $row['name']);
+                    $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
                 }
             }
         }
+        $mysqli->close();
     }
 
     public function getRoute($dir){
@@ -49,7 +53,19 @@ class Router {
             return "front-page";
         }
         elseif($this->_route[trim($dir, "/")]){
-            return $this->_route[trim($dir, "/")];
+            return $this->_route[trim($dir, "/")]["file"];
+        }
+        else{
+            return "_404";
+        }
+    }
+    
+    public function getHeader($dir){
+        if(strlen(trim($dir, "/")) == 0){
+            return "SITE_HEADER"; // Заменить на глобальный заголовок сайта из БД
+        }
+        elseif($this->_route[trim($dir, "/")]){
+            return $this->_route[trim($dir, "/")]["name"] . " >> " . "SITE_HEADER";
         }
         else{
             return "_404";
