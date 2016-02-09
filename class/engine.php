@@ -14,6 +14,9 @@ class Engine extends Router {
 
     public function __construct() {
         parent::__construct();
+        // Сохранить имя домена для пермалинков
+        $this->domain = $_SERVER['SERVER_NAME'];
+        // Разобрать URI
         $this->request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $this->url_info = parse_url($this->request_uri);
         $uri = urldecode($this->url_info['path']);
@@ -30,7 +33,7 @@ class Engine extends Router {
             $this->_page_file = $this->getRoute($uri);
 
         }
-         //Если в GET запросе нет переменной page, то открываем главную
+         //Если URI отсутствует, то открываем главную
         else {
             $this->_page_file = "front-page";
         }
@@ -58,6 +61,23 @@ class Engine extends Router {
         $res = "templates/" . $this->_page_file . ".php";
         return $res;
     }
-
+    /***
+     * Сборка главного меню
+     */
+    // Сборка подменю для указанного пункта верхнего уровня
+    private function getSubMenu($id){
+        
+    }
+    public function getMainMenu(){
+        $openTag = "<nav class=\"fool-menu\"><ul>";
+        $closeTag = "<\/ul><\/nav>";
+        $body = "";
+        $str = "";
+        foreach($this->_route as $key => $route){
+            if($route["id"] == -1){
+                $str = 
+            }
+        }
+    }
 }
 ?>

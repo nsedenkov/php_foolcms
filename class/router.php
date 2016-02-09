@@ -17,10 +17,16 @@ class Router {
      * @param <string> $name - "человеческое" имя страницы
      */
     private function setRoute($dir, $file, $name, $id, $pid) {
-        $this->_route[trim($dir, "/")] = array ("file" => $file,
-                                                "name" => $name,
-                                                "id" => $id,
-                                                "pid" => $pid);
+        if(!_route[trim($dir, "/")]){
+            $this->_route[trim($dir, "/")] = array ("file" => $file,
+                                                    "name" => $name,
+                                                    "id" => $id,
+                                                    "pid" => $pid);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
