@@ -15,6 +15,7 @@ class Engine extends Router {
     public function __construct() {
         parent::__construct();
         // Сохранить имя домена для пермалинков
+        $this->proto = $_SERVER['REQUEST_SCHEME'];
         $this->domain = $_SERVER['SERVER_NAME'];
         // Разобрать URI
         $this->request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -61,23 +62,43 @@ class Engine extends Router {
         $res = "templates/" . $this->_page_file . ".php";
         return $res;
     }
+
+    /*
+     * Возвращает полную ссылку вида "домен/страница"
+     */
+    private function getPermalink($dir) {
+        return $this->proto . "://" . $this->domain . "/" . $dir;
+    }
     /***
      * Сборка главного меню
      */
     // Сборка подменю для указанного пункта верхнего уровня
     private function getSubMenu($id){
-        
-    }
-    public function getMainMenu(){
-        $openTag = "<nav class=\"fool-menu\"><ul>";
-        $closeTag = "<\/ul><\/nav>";
+        $openTag = "<ul>";
+        $closeTag = "</ul>";
         $body = "";
-        $str = "";
-        foreach($this->_route as $key => $route){
-            if($route["id"] == -1){
-                $str = 
+        $href="";
+        $submenu = "";
+        foreach($this->_route as $key=>$route){
+            if($route["pid"] == $id){
+                $href = $this->getPermalink($key);
+                $submenu = $this->getSubMenu($route["id"]);
+                $body .= "<li><a href=\"$href\">$route[name]</a>$submenu</li>";
             }
         }
+        if(strlen($body) != 0){
+            return $openTag . $body . $closeTag;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function getMainMenu(){
+        $openTag = "<nav class=\"fool-menu\">";
+        $closeTag = "</nav>";
+        $res = $openTag . $this->getSubMenu(-1) . $closeTag;
+        echo $res;
     }
 }
 ?>

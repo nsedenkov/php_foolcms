@@ -4,7 +4,7 @@
  * Класс для обработки ЧПУ-запросов
  */
 class Router {
-    private $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
+    public $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
 
     public function __construct(){
         $this->readRoutes();
@@ -17,7 +17,7 @@ class Router {
      * @param <string> $name - "человеческое" имя страницы
      */
     private function setRoute($dir, $file, $name, $id, $pid) {
-        if(!_route[trim($dir, "/")]){
+        if(!$this->_route[trim($dir, "/")]){
             $this->_route[trim($dir, "/")] = array ("file" => $file,
                                                     "name" => $name,
                                                     "id" => $id,
@@ -43,8 +43,8 @@ class Router {
         }
         else {
             // Добавить в таблицу objects поле order - порядок отображения в меню (на своем уровне)
-            $res = $mysqli->query('SELECT id,parent_id,name,alias,template,order FROM objects WHERE type=\'page\' 
-                                   ORDER BY parent_id, order');
+                $res = $mysqli->query('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
+                                       ORDER BY parent_id, _order');
             if ($res->num_rows > 0){
                 while($row = $res->fetch_assoc()){
                     $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
@@ -65,7 +65,7 @@ class Router {
             return "_404";
         }
     }
-    
+
     public function getHeader($dir){
         if(strlen(trim($dir, "/")) == 0){
             return "SITE_HEADER"; // Заменить на глобальный заголовок сайта из БД
