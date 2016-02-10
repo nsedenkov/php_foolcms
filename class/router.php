@@ -9,7 +9,7 @@ class Router {
     public function __construct(){
         $this->readRoutes();
     }
-    
+
     /*
      * Ищет "родителя" для представления uri в виде "раздел/подраздел"
      */
@@ -33,14 +33,15 @@ class Router {
      * @param <string> $name - "человеческое" имя страницы
      */
     private function setRoute($dir, $file, $name, $id, $pid) {
+        $uri =  trim($dir, "/");
         if($pid > -1){
-            
+            $uri = $this->findParent($pid) . "/" . $uri;
         }
-        if(!$this->_route[trim($dir, "/")]){
-            $this->_route[trim($dir, "/")] = array ("file" => $file,
-                                                    "name" => $name,
-                                                    "id" => $id,
-                                                    "pid" => $pid);
+        if(!$this->_route[$uri]){
+            $this->_route[$uri] = array ("file" => $file,
+                                         "name" => $name,
+                                         "id" => $id,
+                                         "pid" => $pid);
             return true;
         }
         else{
@@ -61,9 +62,8 @@ class Router {
             echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
         }
         else {
-            // Добавить в таблицу objects поле order - порядок отображения в меню (на своем уровне)
-                $res = $mysqli->query('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
-                                       ORDER BY parent_id, _order');
+            $res = $mysqli->query('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
+                                   ORDER BY parent_id, _order');
             if ($res->num_rows > 0){
                 while($row = $res->fetch_assoc()){
                     $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
@@ -85,7 +85,7 @@ class Router {
         }
     }
 
-    public function getHeader($dir){
+    protected function getHeader($dir){
         if(strlen(trim($dir, "/")) == 0){
             return "SITE_HEADER"; // Заменить на глобальный заголовок сайта из БД
         }

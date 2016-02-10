@@ -13,6 +13,7 @@ class Engine extends Router {
     private $url_info = null;
     private $proto = null;
     private $domain = null;
+    private $title = null;
 
     public function __construct() {
         parent::__construct();
@@ -34,7 +35,7 @@ class Engine extends Router {
 
             //разрешаем маршрут в имя шаблона
             $this->_page_file = $this->getRoute($uri);
-
+            $this->title = $this->getHeader($uri);
         }
          //Если URI отсутствует, то открываем главную
         else {
@@ -102,5 +103,10 @@ class Engine extends Router {
         $res = $openTag . $this->getSubMenu(-1) . $closeTag;
         echo $res;
     }
+
+    public function getPageTitle() {
+        echo $this->title;
+    }
+
 }
 ?>

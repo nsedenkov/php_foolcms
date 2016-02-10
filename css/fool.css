@@ -7,9 +7,9 @@ background-color:#53bd84;
 height:50px;
 line-height:50px;
 position:relative;
-width:670px;
+width:100%;
 margin:auto;
-margin-top:80px;
+margin-top:0;
  }
 
  .fool-menu ul {
