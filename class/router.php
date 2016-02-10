@@ -4,10 +4,26 @@
  * Класс для обработки ЧПУ-запросов
  */
 class Router {
-    public $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
+    protected $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
 
     public function __construct(){
         $this->readRoutes();
+    }
+    
+    /*
+     * Ищет "родителя" для представления uri в виде "раздел/подраздел"
+     */
+    private function findParent($id) {
+        foreach($this->_route as $key=>$value){
+            if($value["id"] == $id){
+                if($value["pid"] > -1){
+                    return $this->findParent($value["pid"]) . "/" . $key;
+                }
+                else {
+                    return $key;
+                }
+            }
+        }
     }
 
     /**
@@ -17,6 +33,9 @@ class Router {
      * @param <string> $name - "человеческое" имя страницы
      */
     private function setRoute($dir, $file, $name, $id, $pid) {
+        if($pid > -1){
+            
+        }
         if(!$this->_route[trim($dir, "/")]){
             $this->_route[trim($dir, "/")] = array ("file" => $file,
                                                     "name" => $name,

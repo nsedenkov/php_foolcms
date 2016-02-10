@@ -11,6 +11,8 @@ class Engine extends Router {
     private $_error = null;
     private $request_uri = null;
     private $url_info = null;
+    private $proto = null;
+    private $domain = null;
 
     public function __construct() {
         parent::__construct();
