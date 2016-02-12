@@ -82,9 +82,9 @@ class Engine extends Router {
         $body = "";
         $href="";
         $submenu = "";
-        if($id == -1){
+        /*if($id == -1){
             $body = "<li><a href=\"/\">Главная</a></li>";
-        }
+        }*/
         foreach($this->_route as $key=>$route){
             if($route["pid"] == $id){
                 $href = $this->getPermalink($key);

@@ -1,12 +1,15 @@
 <?php
 
+include_once "dbaccess.php";
 /**
  * Класс для обработки ЧПУ-запросов
  */
 class Router {
+    public $_fooldb = null;
     protected $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
 
     public function __construct(){
+        $this->_fooldb = new FoolDB();
         $this->readRoutes();
     }
 
@@ -55,22 +58,14 @@ class Router {
      * objects.type -> page
      */
     private function readRoutes() {
-        $json = file_get_contents('dbcfg.json');
-        $dbp = json_decode($json, true);
-        $mysqli = new mysqli("localhost", $dbp['user'], $dbp['pswd'], $dbp['dbnm']);
-        if ($mysqli->connect_errno) {
-            echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-        }
-        else {
-            $res = $mysqli->query('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
-                                   ORDER BY parent_id, _order');
-            if ($res->num_rows > 0){
-                while($row = $res->fetch_assoc()){
-                    $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
-                }
+        // res - результат запроса mysqli
+        $res = $this->_fooldb->exQuery('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
+                                        ORDER BY parent_id, _order');
+        if ($res->num_rows > 0){
+            while($row = $res->fetch_assoc()){
+                $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
             }
         }
-        $mysqli->close();
     }
 
     public function getRoute($dir){
