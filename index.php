@@ -15,4 +15,5 @@ if ($engine->getError()) { //Если возникли ошибки, вывод�
 include_once $engine->getContentPage(); //Выводим страницы сайта
 
 include_once "templates/footer.php";//Подключаем подвал сайта
+$engine->destroy();
 ?>

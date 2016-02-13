@@ -22,16 +22,37 @@ class FoolDB{
     }
 
     public function destroy(){
+        // Закрыть соединение с БД
         if($this->isActive){
             $this->mysqli->close();
         }
     }
 
-    public function exQuery($qstr){
+    private function exQuery($qstr){
+        // Выполняет произвольный запрос к БД
         $res = null;
         if($this->isActive){
             $res = $this->mysqli->query($qstr);
         }
+        return $res;
+    }
+
+    public function getOneGeneral($name){
+        // Возвращает параметр из таблицы General по имени
+        $res = null;
+        if($this->isActive){
+            $qry = $this->exQuery("SELECT id,value FROM general WHERE name=\"$name\" ORDER BY id DESC");
+            if($qry->num_rows>0){
+                $row = $qry->fetch_assoc();
+                $res = $row['value'];
+            }
+        }
+        return $res;
+    }
+
+    public function getAllRoutes(){
+        $res = $this->exQuery('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
+                               ORDER BY parent_id, _order');
         return $res;
     }
 }

@@ -19,14 +19,16 @@ class Engine extends Router {
         parent::__construct();
         // Сохранить имя домена для пермалинков
         $this->proto = $_SERVER['REQUEST_SCHEME'];
-        $this->domain = $_SERVER['SERVER_NAME'];
+        if(isset($_SERVER['HTTP_HOST'])){
+            $this->domain = $_SERVER['HTTP_HOST'];
+        }
+        else{
+            $this->domain = $_SERVER['SERVER_NAME'];
+        }
         // Разобрать URI
         $this->request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $this->url_info = parse_url($this->request_uri);
         $uri = urldecode($this->url_info['path']);
-        file_put_contents('foollog.txt', $this->request_uri);
-        file_put_contents('foollog.txt', $this->url_info);
-        file_put_contents('foollog.txt', $uri);
         if ($uri != '/') { //Если открыта какая-нибудь страница
             //Небольшая защита
             $uri = str_replace(".", null, $uri);
@@ -41,6 +43,10 @@ class Engine extends Router {
         else {
             $this->_page_file = "front-page";
         }
+    }
+
+    public function destroy(){
+        parent::destroy();
     }
 
     /**

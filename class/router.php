@@ -13,6 +13,12 @@ class Router {
         $this->readRoutes();
     }
 
+    public function destroy(){
+        if(isset($this->_fooldb)){
+            $this->_fooldb->destroy();
+        }
+    }
+
     /*
      * Ищет "родителя" для представления uri в виде "раздел/подраздел"
      */
@@ -59,8 +65,7 @@ class Router {
      */
     private function readRoutes() {
         // res - результат запроса mysqli
-        $res = $this->_fooldb->exQuery('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
-                                        ORDER BY parent_id, _order');
+        $res = $this->_fooldb->getAllRoutes();
         if ($res->num_rows > 0){
             while($row = $res->fetch_assoc()){
                 $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
@@ -68,7 +73,7 @@ class Router {
         }
     }
 
-    public function getRoute($dir){
+    protected function getRoute($dir){
         if(strlen(trim($dir, "/")) == 0){
             return "front-page";
         }
@@ -116,14 +121,5 @@ class Router {
         return $res;
     }
 }
-
-/*
-$route = new Router;
-$route->setRoute("page/article-1/", "1.html"); //Устанавливаем маршрут "page/article-1/", и файл который будет открываться при этом маршруте
-$route->setRoute("article-2", "2.html");
-if (!$route->route()) { //Если маршрут не задан..
-    echo "Маршрут не задан";
-
-}*/
 
 ?>

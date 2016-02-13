@@ -17,6 +17,17 @@ margin:auto;
 margin-top:0;
  }
 
+@media screen and (max-width: 767px){
+    .fool-menu {
+    width: 150px;
+    height: 100%;
+    margin: 0;
+    display: inline-block;
+    float: left;
+    clear: left;
+    }
+}
+
  .fool-menu ul {
 list-style:none;
  }
@@ -49,6 +60,13 @@ left:300px;
 top:50px;
 width:190px;
  }
+
+@media screen and (max-width: 767px){
+    .fool-menu ul ul {
+    top:100px;
+    left:150px;
+    }
+}
 
  .fool-menu ul ul li a {
 float:none;
