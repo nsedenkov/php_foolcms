@@ -3,6 +3,47 @@ padding: 0;
 margin: 0;
 }
 
+.fright {
+    float: right;
+}
+
+.fleft {
+    float: left;
+}
+
+.m-left {
+    margin-left: 10px;
+}
+
+.m-right {
+    margin-right: 10px;
+}
+
+.m-top {
+    margin-top: 10px;
+}
+
+.m-bottom {
+    margin-bottom: 10px;
+}
+.wrapper {
+width: 100%;
+overflow: auto;
+clear: both;
+}
+
+.footer{
+border-top: 4px solid #53bd84;
+background: #2d2d2d;
+color: #53bd84;
+font-size: 14px;
+width: 100%;
+overflow: auto;
+clear: both;
+}
+.copyright {
+display: inline-block;
+}
 /*************************************
  * Main menu
  ************************************/
@@ -24,7 +65,6 @@ margin-top:0;
     margin: 0;
     display: inline-block;
     float: left;
-    clear: left;
     }
 }
 

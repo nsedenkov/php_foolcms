@@ -7,4 +7,5 @@
         <link rel="stylesheet" href="css/fool.css" type="text/css">
     </head>
     <body>
+    <div class="wrapper">
     <?php $engine->getMainMenu(); ?>
