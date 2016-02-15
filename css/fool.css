@@ -44,6 +44,20 @@ clear: both;
 .copyright {
 display: inline-block;
 }
+@media screen and (max-width: 767px){
+    .wrapper {
+        margin-left: 30px;
+        width: calc(100% - 30px);
+        width: -moz-calc(100% - 30px);
+        width: -webkit-calc(100% - 30px);
+    }
+    .footer{
+        margin-left: 30px;
+        width: calc(100% - 30px);
+        width: -moz-calc(100% - 30px);
+        width: -webkit-calc(100% - 30px);
+    }
+}
 /*************************************
  * Main menu
  ************************************/
@@ -56,15 +70,31 @@ position:relative;
 width:100%;
 margin:auto;
 margin-top:0;
- }
+}
+
+.left-menu {
+position: absolute;
+top: 0;
+left: 0;
+background-color:#53bd84;
+display: none;
+height: 100%;
+width: 30px;
+}
 
 @media screen and (max-width: 767px){
     .fool-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 150px;
     height: 100%;
     margin: 0;
+    display: none;
+    /*float: left;*/
+    }
+    .left-menu {
     display: inline-block;
-    float: left;
     }
 }
 

@@ -8,4 +8,6 @@
     </head>
     <body>
     <div class="wrapper">
+    <div class="left-menu">
+    </div>
     <?php $engine->getMainMenu(); ?>
