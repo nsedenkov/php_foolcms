@@ -46,16 +46,16 @@ display: inline-block;
 }
 @media screen and (max-width: 767px){
     .wrapper {
-        margin-left: 30px;
-        width: calc(100% - 30px);
-        width: -moz-calc(100% - 30px);
-        width: -webkit-calc(100% - 30px);
+        margin-left: 45px;
+        width: calc(100% - 45px);
+        width: -moz-calc(100% - 45px);
+        width: -webkit-calc(100% - 45px);
     }
     .footer{
-        margin-left: 30px;
-        width: calc(100% - 30px);
-        width: -moz-calc(100% - 30px);
-        width: -webkit-calc(100% - 30px);
+        margin-left: 45px;
+        width: calc(100% - 45px);
+        width: -moz-calc(100% - 45px);
+        width: -webkit-calc(100% - 45px);
     }
 }
 /*************************************
@@ -71,6 +71,11 @@ width:100%;
 margin:auto;
 margin-top:0;
 }
+@media screen and (min-width: 768px){
+     .fool-menu {
+    display:block;
+    }
+}
 
 .left-menu {
 position: absolute;
@@ -79,14 +84,14 @@ left: 0;
 background-color:#53bd84;
 display: none;
 height: 100%;
-width: 30px;
+width: 45px;
 }
 
 @media screen and (max-width: 767px){
     .fool-menu {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 45px;
     width: 150px;
     height: 100%;
     margin: 0;
@@ -149,3 +154,45 @@ width:160px;
  .fool-menu ul ul li a:hover {
 color:#fff;
   }
+
+/************************
+ * Toggle
+ ***********************/
+.navbar-toggle {
+    position: relative;
+    float: right;
+    padding: 5px 3px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 0;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid #fff;
+}
+
+.navbar-toggle .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: #fff;
+}
+
+.navbar-toggle .icon-bar + .icon-bar {
+    margin-top: 4px;
+}
+
+.navbar-toggle:focus {
+    outline: 0;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

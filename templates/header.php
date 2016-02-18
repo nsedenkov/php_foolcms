@@ -9,5 +9,13 @@
     <body>
     <div class="wrapper">
     <div class="left-menu">
+        <div class="navbar-header">
+            <button type="button" id="m-btn" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
     </div>
     <?php $engine->getMainMenu(); ?>

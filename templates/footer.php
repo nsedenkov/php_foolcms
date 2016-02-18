@@ -11,5 +11,6 @@ $auth = $engine->_fooldb->getOneGeneral('fool_author');
 <p>Powered by FoolCMS</p>
 </div>
 </footer>
+<script type='text/javascript' src='js/fool.js'></script>
 </body>
 </html>
