@@ -4,12 +4,12 @@ include_once "dbaccess.php";
 /**
  * Класс для обработки ЧПУ-запросов
  */
-class Router {
-    public $_fooldb = null;
+abstract class Router {
+    private $_fooldb = null;
     protected $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
 
-    public function __construct(){
-        $this->_fooldb = new FoolDB();
+    protected function __construct(){
+        $this->_fooldb = FoolDB::getInstance();
         $this->readRoutes();
     }
 
@@ -95,6 +95,10 @@ class Router {
         else{
             return "_404";
         }
+    }
+
+    protected function getSingleParam($name){
+        return $this->_fooldb->getOneGeneral($name);
     }
 
     /**

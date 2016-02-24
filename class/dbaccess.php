@@ -4,12 +4,15 @@
  * Использует mysqli
  ********************************/
 
-class FoolDB{
+final class FoolDB{
 
+    // Применяем паттерн Singleton
+    private static $instance; // контейнер экземпляра объекта
     private $mysqli = null;
     private $isActive = false;
 
-    public function __construct(){
+    // для предотвращения создания извне через new FoolDB
+    private function __construct(){
         $json = file_get_contents('dbcfg.json');
         $dbp = json_decode($json, true);
         $this->mysqli = new mysqli("localhost", $dbp['user'], $dbp['pswd'], $dbp['dbnm']);
@@ -26,6 +29,13 @@ class FoolDB{
         if($this->isActive){
             $this->mysqli->close();
         }
+    }
+
+    public static function getInstance(){
+        if(empty(self::$instance)){
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     private function exQuery($qstr){

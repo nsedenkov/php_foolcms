@@ -2,8 +2,8 @@
 <footer class="footer">
 <div class="copyright m-top m-bottom m-left">
 <?php
-$year = $engine->_fooldb->getOneGeneral('fool_year');
-$auth = $engine->_fooldb->getOneGeneral('fool_author');
+$year = Engine::getInstance()->getParam('fool_year');
+$auth = Engine::getInstance()->getParam('fool_author');
 ?>
 <p><strong>&copy; <?php echo "$year, $auth" ?></strong></p>
 </div>
