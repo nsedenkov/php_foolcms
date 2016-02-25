@@ -196,3 +196,192 @@ color:#fff;
     clip: rect(0, 0, 0, 0);
     border: 0;
 }
+
+/*******************************
+ * Slider
+ ******************************/
+.slider
+{
+    position: relative;
+    z-index:0;
+}
+
+.slider input
+{
+    display: none;
+}
+.slider label
+{
+    bottom: 10px;
+    display: inline-block;
+    z-index: 2;
+    width: 26px;
+    height: 27px;
+    transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -webkit-transition: all 0.1s linear;
+    -o-transition: all 0.1s linear;
+    background: #f4f4f5;
+    border: 1px solid #e6e6e6;
+    border-bottom-color: #bfbfbf;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px #000000;
+    text-align: center;
+    cursor: pointer;
+    font: 14px/27px arial, tahoma;
+    color: #333;
+}
+.slider .selector_list
+{
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 11;
+}
+.slider .item
+{
+    width: 100%;
+    opacity: 1.0;
+    transition: opacity 0.0s linear 0.2s;
+    -moz-transition: opacity 0.0s linear 0.2s;
+    -webkit-transition: opacity 0.0s linear 0.2s;
+    -o-transition: opacity 0.0s linear 0.2s;
+}
+
+.slider img {
+    display:block;
+    height: auto;
+    width: 100%;
+    }
+
+.image-tape:hover .image-tape__item
+{
+    -moz-animation-play-state: paused;
+    -webkit-animation-play-state: paused;
+    -o-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+.slider .item ~ .item
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    opacity: 0.0;
+}
+.slider input:nth-of-type(1):checked ~ .selector_list label:nth-of-type(1),
+.slider input:nth-of-type(2):checked ~ .selector_list label:nth-of-type(2),
+.slider input:nth-of-type(3):checked ~ .selector_list label:nth-of-type(3),
+.slider input:nth-of-type(4):checked ~ .selector_list label:nth-of-type(4),
+.slider input:nth-of-type(5):checked ~ .selector_list label:nth-of-type(5)
+{
+    color: #fff;
+}
+.slider input:nth-of-type(1):checked ~ .item:nth-of-type(1),
+.slider input:nth-of-type(2):checked ~ .item:nth-of-type(2),
+.slider input:nth-of-type(3):checked ~ .item:nth-of-type(3),
+.slider input:nth-of-type(4):checked ~ .item:nth-of-type(4),
+.slider input:nth-of-type(5):checked ~ .item:nth-of-type(5)
+{
+    opacity: 1.0;
+    transition: opacity 0.2s linear;
+    -moz-transition: opacity 0.2s linear;
+    -webkit-transition: opacity 0.2s linear;
+    -o-transition: opacity 0.2s linear;
+    z-index: 6;
+}
+
+/* авторотация слайдов */
+@keyframes item-autoplay_count_2 {0%{opacity:0;}20%{opacity:1;}50%{opacity:1;}70%{opacity:0;}100%{opacity:0;}}
+@keyframes item-autoplay_count_3 {0%{opacity:0;}10%{opacity:1;}33% {opacity:1;}43% {opacity:0;}100%{opacity:0;}}
+@keyframes item-autoplay_count_4 {0%{opacity:0;}8% {opacity:1;}25% {opacity:1;}33% {opacity:0;}100%{opacity:0;}}
+@keyframes item-autoplay_count_5 {0%{opacity:0;}7% {opacity:1;}20%{opacity:1;}27% {opacity:0;}100%{opacity:0;}}
+
+@-moz-keyframes item-autoplay_count_2 {0%{opacity:0;}20%{opacity:1;}50%{opacity:1;}70%{opacity:0;}100%{opacity:0;}}
+@-moz-keyframes item-autoplay_count_3 {0%{opacity:0;}10%{opacity:1;}33% {opacity:1;}43% {opacity:0;}100%{opacity:0;}}
+@-moz-keyframes item-autoplay_count_4 {0%{opacity:0;}8% {opacity:1;}25% {opacity:1;}33% {opacity:0;}100%{opacity:0;}}
+@-moz-keyframes item-autoplay_count_5 {0%{opacity:0;}7% {opacity:1;}20%{opacity:1;}27% {opacity:0;}100%{opacity:0;}}
+
+@-webkit-keyframes item-autoplay_count_2 {0%{opacity:0;}20%{opacity:1;}50%{opacity:1;}70%{opacity:0;}100%{opacity:0;}}
+@-webkit-keyframes item-autoplay_count_3 {0%{opacity:0;}10%{opacity:1;}33% {opacity:1;}43% {opacity:0;}100%{opacity:0;}}
+@-webkit-keyframes item-autoplay_count_4 {0%{opacity:0;}8% {opacity:1;}25% {opacity:1;}33% {opacity:0;}100%{opacity:0;}}
+@-webkit-keyframes item-autoplay_count_5 {0%{opacity:0;}7% {opacity:1;}20%{opacity:1;}27% {opacity:0;}100%{opacity:0;}}
+
+@-o-keyframes item-autoplay_count_2 {0%{opacity:0;}20%{opacity:1;}50%{opacity:1;}70%{opacity:0;}100%{opacity:0;}}
+@-o-keyframes item-autoplay_count_3 {0%{opacity:0;}10%{opacity:1;}33% {opacity:1;}43% {opacity:0;}100%{opacity:0;}}
+@-o-keyframes item-autoplay_count_4 {0%{opacity:0;}8% {opacity:1;}25% {opacity:1;}33% {opacity:0;}100%{opacity:0;}}
+@-o-keyframes item-autoplay_count_5 {0%{opacity:0;}7% {opacity:1;}20%{opacity:1;}27% {opacity:0;}100%{opacity:0;}}
+
+.slider.slider_count_2 .item
+{
+    animation: item-autoplay_count_2 10s infinite;
+    -moz-animation: item-autoplay_count_2 10s infinite;
+    -webkit-animation: item-autoplay_count_2 10s infinite;
+    -o-animation: item-autoplay_count_2 10s infinite;
+}
+.slider.slider_count_3 .item
+{
+    animation: item-autoplay_count_3 15s infinite;
+    -moz-animation: item-autoplay_count_3 15s infinite;
+    -webkit-animation: item-autoplay_count_3 15s infinite;
+    -o-animation: item-autoplay_count_3 15s infinite;
+}
+.slider.slider_count_4 .item
+{
+    animation: item-autoplay_count_4 20s infinite;
+    -moz-animation: item-autoplay_count_4 20s infinite;
+    -webkit-animation: item-autoplay_count_4 20s infinite;
+    -o-animation: item-autoplay_count_4 20s infinite;
+}
+.slider.slider_count_5 .item
+{
+    animation: item-autoplay_count_5 25s infinite;
+    -moz-animation: item-autoplay_count_5 25s infinite;
+    -webkit-animation: item-autoplay_count_5 25s infinite;
+    -o-animation: item-autoplay_count_5 25s infinite;
+}
+.slider .item:nth-of-type(2) {
+
+    animation-delay:5s;-moz-animation-delay:5s;
+    -webkit-animation-delay:5s;-o-animation-delay:5s;
+}
+.slider .item:nth-of-type(3) {
+    animation-delay:10s;
+    -moz-animation-delay:10s;
+    -webkit-animation-delay:10s;
+    -o-animation-delay:10s;
+}
+.slider .item:nth-of-type(4){
+    animation-delay:15s;
+    -moz-animation-delay:15s;
+    -webkit-animation-delay:15s;
+    -o-animation-delay:15s;
+}
+.slider .item:nth-of-type(5){
+    animation-delay:20s;
+    -moz-animation-delay:20s;
+    -webkit-animation-delay:20s;
+    -o-animation-delay:20s;
+}
+
+.slider input:checked ~ .item
+{
+    animation: none;
+    -moz-animation: none;
+    -webkit-animation: none;
+    -o-animation: none;
+}
+
+
+.slider label:hover
+{
+    background: #dfdfdf;
+}
+.slider input:nth-of-type(1):checked ~ .selector_list label:nth-of-type(1),
+.slider input:nth-of-type(2):checked ~ .selector_list label:nth-of-type(2),
+.slider input:nth-of-type(3):checked ~ .selector_list label:nth-of-type(3),
+.slider input:nth-of-type(4):checked ~ .selector_list label:nth-of-type(4),
+.slider input:nth-of-type(5):checked ~ .selector_list label:nth-of-type(5)
+{
+    background: #ac2827;
+}

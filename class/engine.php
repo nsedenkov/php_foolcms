@@ -12,7 +12,6 @@ class Engine extends Router {
     private $_page_file = null;
     private $_error = null;
     private $request_uri = null;
-    private $url_info = null;
     private $proto = null;
     private $domain = null;
     private $title = null;
@@ -33,8 +32,8 @@ class Engine extends Router {
     private function getUri(){
         $res = null;
         $this->getEnvVar();
-        $this->url_info = parse_url($this->request_uri);
-        $res = urldecode($this->url_info['path']);
+        $url_info = parse_url($this->request_uri);
+        $res = urldecode($url_info['path']);
         return $res;
     }
 
@@ -43,7 +42,7 @@ class Engine extends Router {
         if ($uri != '/') { //Если открыта какая-нибудь страница
             //Небольшая защита
             $uri = str_replace(".", null, $uri);
-            $uri = str_replace("/", null, $uri);
+            $uri = trim($uri, "/");
             $uri = str_replace("", null, $uri);
             //разрешаем маршрут в имя шаблона
             $this->_page_file = $this->getRoute($uri);
@@ -93,6 +92,10 @@ class Engine extends Router {
     public function getContentPage() {
         $res = "templates/" . $this->_page_file . ".php";
         return $res;
+    }
+
+    public function getDomName() {
+        return $this->proto . "://" . $this->domain . "/";
     }
 
     /*
