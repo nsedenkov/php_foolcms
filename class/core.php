@@ -5,7 +5,7 @@
  */
 include_once "router.php";
 
-class Engine extends Router {
+class FoolCore extends Router {
 
     // применяем паттерн Singleton
     private static $instance; // контейнер для экземпляра
@@ -94,8 +94,12 @@ class Engine extends Router {
         return $res;
     }
 
-    public function getDomName() {
+    private function getDomName() {
         return $this->proto . "://" . $this->domain . "/";
+    }
+
+    public function outDomName() {
+        echo $this->getDomName();
     }
 
     /*
@@ -114,10 +118,7 @@ class Engine extends Router {
         $body = "";
         $href="";
         $submenu = "";
-        /*if($id == -1){
-            $body = "<li><a href=\"/\">Главная</a></li>";
-        }*/
-        foreach($this->_route as $key=>$route){
+        foreach(parent::getAllRoutes() as $key=>$route){
             if($route["pid"] == $id){
                 $href = $this->getPermalink($key);
                 $submenu = $this->getSubMenu($route["id"]);
@@ -132,19 +133,31 @@ class Engine extends Router {
         }
     }
 
-    public function getMainMenu(){
+    private function getMainMenu(){
         $openTag = "<nav class=\"fool-menu\">";
         $closeTag = "</nav>";
         $res = $openTag . $this->getSubMenu(-1) . $closeTag;
-        echo $res;
+        return $res;
     }
 
-    public function getPageTitle() {
-        echo $this->title;
+    public function outMainMenu(){
+        echo $this->getMainMenu();
     }
 
-    public function getParam($name){
+    private function getPageTitle() {
+        return $this->title;
+    }
+
+    public function outPageTitle() {
+        echo $this->getPageTitle();
+    }
+
+    private function getParam($name){
         return parent::getSingleParam($name);
+    }
+
+    public function outParam($name){
+        echo $this->getParam($name);
     }
 
 }

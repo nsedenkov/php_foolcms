@@ -6,14 +6,14 @@ include_once "dbaccess.php";
  */
 abstract class Router {
     private $_fooldb = null;
-    protected $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
+    private $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
 
     protected function __construct(){
         $this->_fooldb = FoolDB::getInstance();
         $this->readRoutes();
     }
 
-    public function destroy(){
+    protected function destroy(){
         if(isset($this->_fooldb)){
             $this->_fooldb->destroy();
         }
@@ -101,28 +101,8 @@ abstract class Router {
         return $this->_fooldb->getOneGeneral($name);
     }
 
-    /**
-     * Метод смотрит текущий адрес, и сверяет его с установленными маршрутами,
-     * если для открытого адреса установлен маршрут, то открываем страницу
-     * @return <boolean>
-     */
-    public function route() {
-        if (!isset($_SERVER["PATH_INFO"])) { //Если открыта главная страница
-            include_once "index.html"; //Открываем файл главной страницы
-        } elseif (isset($this->_route[trim($_SERVER["PATH_INFO"], "/")])) { //Если маршрут задан
-            include_once $this->_route[trim($_SERVER["PATH_INFO"], "/")]; //Открываем файл, для которого установлен маршрут
-        }
-        else return false; //Если маршрут не задан
-
-        return true;
-    }
-
-    public function getAllRoutes() {
-        $res = null;
-        foreach($this->_route as $one) {
-            $res .= $one;
-        }
-        return $res;
+    protected function getAllRoutes() {
+        return $this->_route;
     }
 }
 
