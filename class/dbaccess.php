@@ -49,7 +49,7 @@ final class FoolDB{
 
     public function getOneGeneral($name){
         // Возвращает параметр из таблицы General по имени
-        $res = null;
+        $res = false;
         if($this->isActive){
             $qry = $this->exQuery("SELECT id,value FROM general WHERE name=\"$name\" ORDER BY id DESC");
             if($qry->num_rows>0){
@@ -64,6 +64,23 @@ final class FoolDB{
         $res = $this->exQuery('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
                                ORDER BY parent_id, _order');
         return $res;
+    }
+
+    public function getAllObjects($type) {
+        // возвращает массив с id объектов заданного типа
+        $res = array();
+        $qry = $this->exQuery("SELECT id FROM objects WHERE type=\"$type\"");
+        if ($qry->num_rows > 0) {
+            while ($row = $qry->fetchassoc()) {
+                $res[] = $row["id"];
+            }
+        }
+        if (count($res) > 0) {
+            return $res;
+        }
+        else {
+            return false;
+        }
     }
 }
 ?>

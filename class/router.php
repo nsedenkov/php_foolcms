@@ -98,7 +98,13 @@ abstract class Router {
     }
 
     protected function getSingleParam($name){
-        return $this->_fooldb->getOneGeneral($name);
+        $res = $this->_fooldb->getOneGeneral($name);
+        if ($res) {
+            return $res;
+        }
+        else {
+            return "NONE";
+        }
     }
 
     protected function getAllRoutes() {

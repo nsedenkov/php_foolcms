@@ -1,12 +1,36 @@
 <?php
 
+interface IObject {
+    public function __construct($id);
+    private function loadObject();
+}
+
+abstract class FoolObject implements IObject {
+    private $objid;
+    public function __construct($id) {
+        $this->objid = $id;
+    }
+
+    private function loadObject() {
+
+    }
+}
+
+class Plugin extends FoolObject {
+
+}
+
+class Post extends FoolObject {
+
+}
+
 class PlugManager {
 
     private static $instance;
     private $plugins = array();
 
     private function __construct() {
-        $this->scanPlugins();
+        self::scanPlugins();
     }
 
     public static function getInstance(){
