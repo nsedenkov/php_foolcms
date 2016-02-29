@@ -71,9 +71,24 @@ final class FoolDB{
         $res = array();
         $qry = $this->exQuery("SELECT id FROM objects WHERE type=\"$type\"");
         if ($qry->num_rows > 0) {
-            while ($row = $qry->fetchassoc()) {
+            while ($row = $qry->fetch_assoc()) {
                 $res[] = $row["id"];
             }
+        }
+        if (count($res) > 0) {
+            return $res;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public function getOneObject($id) {
+        // возвращает один объект по id
+        $res = array();
+        $qry = $this->exQuery("SELECT name,dt_create,content FROM objects WHERE id=\"$id\"");
+        if ($qry->num_rows > 0) {
+            $res = $qry->fetch_assoc();
         }
         if (count($res) > 0) {
             return $res;
