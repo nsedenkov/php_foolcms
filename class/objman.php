@@ -85,10 +85,10 @@ class Post extends FoolObject {
     }
 
     private function formatHTML($obj) {
-        $pattern_text_full = '{(\[text\].*?\[/text\])}';
-        $pattern_text_contents = '{(\[text\](.*?)\[/text\])}';
-        $pattern_p_full = '{(\[p\].*?\[/p\])}';
-        $pattern_p_contents = '{(\[p\](.*?)\[/p\])}';
+        $pattern_text_full = '{(\[text\].*?\[\/text\])}';
+        $pattern_text_contents = '{(\[text\](.*?)\[\/text\])}';
+        $pattern_p_full = '{(\[p\].*?\[\/p\])}';
+        $pattern_p_contents = '{(\[p\](.*?)\[\/p\])}';
         $open = "<article>";
         $close = "</article>";
         $post_hdr = "";
@@ -102,10 +102,9 @@ class Post extends FoolObject {
             $content = $obj["content"];
             preg_match($pattern_text_contents, $content, $tmp);
             $content = preg_replace($pattern_text_full, "<noindex><div class=\"post-entry\">$tmp[2]</div></noindex>", $content);
-            unset($tmp);
-            preg_match_all($pattern_p_contents, $content, $tmp);
-            foreach($tmp as $match) {
-                $content = preg_replace($pattern_p_full, "<p>$match[2]</p>", $content);
+            preg_match_all($pattern_p_contents, $content, $tmp, PREG_PATTERN_ORDER);
+            foreach($tmp[2] as $match) {
+                $content = preg_replace($pattern_p_full, "<p>$match</p>", $content, 1);
             }
             $post_txt = $content;
         }
