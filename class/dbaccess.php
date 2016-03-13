@@ -21,6 +21,8 @@ final class FoolDB{
         }
         else{
             $this->isActive = true;
+            $this->exQuery("SET NAMES utf8");
+            $this->exQuery("SET CHARACTER SET utf8");
         }
     }
 

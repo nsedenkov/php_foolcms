@@ -86,6 +86,19 @@ class FoolCore extends Router {
         return $this->_error;
     }
 
+    public function openSite() {
+        include_once _ROOT_DIR_ . "/" . _TEMPLATE_DIR_ . "/" . _HEADER_; //Подключаем шапку сайта
+
+        if ($this->getError()) { //Если возникли ошибки, выводим сообщение на экран
+            echo "<div style='border:1px solid red;padding:10px;margin: 10px auto;
+                width: 500px;'>" . $this->getError() . "</div>";
+        }
+        include_once $this->getContentPage(); //Выводим страницы сайта
+
+        include_once _ROOT_DIR_ . "/" . _TEMPLATE_DIR_ . "/" . _FOOTER_;//Подключаем подвал сайта
+        //FoolCore::getInstance()->destroy();
+    }
+
     /**
      * Возвращает текст открытой страницы
      */
