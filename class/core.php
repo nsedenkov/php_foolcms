@@ -15,6 +15,7 @@ class FoolCore extends Router {
     private $proto = null;
     private $domain = null;
     private $title = null;
+    private $numcols = 1;
 
     private function getEnvVar(){
         // Сохранить имя домена для пермалинков
@@ -46,12 +47,13 @@ class FoolCore extends Router {
             $uri = str_replace("", null, $uri);
             //разрешаем маршрут в имя шаблона
             $this->_page_file = $this->getRoute($uri);
-            $this->title = $this->getHeader($uri);
         }
          //Если URI отсутствует, то открываем главную
         else {
             $this->_page_file = "front-page";
         }
+        $this->title = $this->getHeader($uri);
+        $this->numcols = $this->getNumCols($uri);
     }
 
     protected function __construct() {
@@ -88,15 +90,25 @@ class FoolCore extends Router {
 
     public function openSite() {
         include_once _ROOT_DIR_ . "/" . _TEMPLATE_DIR_ . "/" . _HEADER_; //Подключаем шапку сайта
-
         if ($this->getError()) { //Если возникли ошибки, выводим сообщение на экран
             echo "<div style='border:1px solid red;padding:10px;margin: 10px auto;
                 width: 500px;'>" . $this->getError() . "</div>";
         }
+        switch ($this->numcols) {
+            case 2: echo "<section class=\"mainfield\">";
+                    break;
+            default: echo "<section class=\"single\">";
+                    break;
+        }
         include_once $this->getContentPage(); //Выводим страницы сайта
-
+        echo "</section>";
+        switch ($this->numcols) {
+            case 2: include_once _TEMPLATE_DIR_ . "/sidebar.php";
+                    break;
+            default:
+                    break;
+        }
         include_once _ROOT_DIR_ . "/" . _TEMPLATE_DIR_ . "/" . _FOOTER_;//Подключаем подвал сайта
-        //FoolCore::getInstance()->destroy();
     }
 
     /**

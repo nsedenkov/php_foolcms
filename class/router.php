@@ -41,7 +41,7 @@ abstract class Router {
      * @param <string> $file - адрес файла
      * @param <string> $name - "человеческое" имя страницы
      */
-    private function setRoute($dir, $file, $name, $id, $pid) {
+    private function setRoute($dir, $file, $name, $id, $pid, $nc) {
         $uri =  trim($dir, "/");
         if($pid > -1){
             $uri = $this->findParent($pid) . "/" . $uri;
@@ -50,7 +50,8 @@ abstract class Router {
             $this->_route[$uri] = array ("file" => $file,
                                          "name" => $name,
                                          "id" => $id,
-                                         "pid" => $pid);
+                                         "pid" => $pid,
+                                         "nc" => $nc);
             return true;
         }
         else{
@@ -68,7 +69,7 @@ abstract class Router {
         $res = $this->_fooldb->getAllRoutes();
         if ($res->num_rows > 0){
             while($row = $res->fetch_assoc()){
-                $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id']);
+                $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id'], $row['numcols']);
             }
         }
     }
@@ -94,6 +95,18 @@ abstract class Router {
         }
         else{
             return "_404";
+        }
+    }
+
+    protected function getNumCols($dir) {
+        if(strlen(trim($dir, "/")) == 0){
+            return 2;
+        }
+        elseif($this->_route[trim($dir, "/")]){
+            return $this->_route[trim($dir, "/")]["numcols"];
+        }
+        else{
+            return 1;
         }
     }
 

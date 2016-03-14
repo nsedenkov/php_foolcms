@@ -63,7 +63,7 @@ final class FoolDB{
     }
 
     public function getAllRoutes(){
-        $res = $this->exQuery('SELECT id,parent_id,name,alias,template,_order FROM objects WHERE type=\'page\'
+        $res = $this->exQuery('SELECT id,parent_id,name,alias,template,_order,numcols FROM objects WHERE type=\'page\'
                                ORDER BY parent_id, _order');
         return $res;
     }
