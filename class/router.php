@@ -37,21 +37,22 @@ abstract class Router {
 
     /**
      * Метод для установки маршрута, и файла который будет открываться при заданом маршруте
-     * @param <string> $dir - маршрут
-     * @param <string> $file - адрес файла
+     * @param <string> $alias - маршрут
+     * @param <string> $file - имя файла
      * @param <string> $name - "человеческое" имя страницы
      */
-    private function setRoute($dir, $file, $name, $id, $pid, $nc) {
-        $uri =  trim($dir, "/");
+    private function setRoute($ar) {
+        extract($ar);
+        $uri =  trim($alias, "/");
         if($pid > -1){
-            $uri = $this->findParent($pid) . "/" . $uri;
+            $uri = $this->findParent($parent_id) . "/" . $uri;
         }
         if(!$this->_route[$uri]){
-            $this->_route[$uri] = array ("file" => $file,
+            $this->_route[$uri] = array ("file" => $template,
                                          "name" => $name,
                                          "id" => $id,
-                                         "pid" => $pid,
-                                         "nc" => $nc);
+                                         "pid" => $parent_id,
+                                         "nc" => $numcols);
             return true;
         }
         else{
@@ -69,7 +70,7 @@ abstract class Router {
         $res = $this->_fooldb->getAllRoutes();
         if ($res->num_rows > 0){
             while($row = $res->fetch_assoc()){
-                $this->setRoute($row['alias'], $row['template'], $row['name'], $row['id'], $row['parent_id'], $row['numcols']);
+                $this->setRoute($row);
             }
         }
     }
@@ -87,11 +88,13 @@ abstract class Router {
     }
 
     protected function getHeader($dir){
+        //$s_hdr = getSingleParam('fool_header');
+        $s_hdr = $this->_fooldb->getOneGeneral('fool_header');
         if(strlen(trim($dir, "/")) == 0){
-            return "SITE_HEADER"; // Заменить на глобальный заголовок сайта из БД
+            return $s_hdr;
         }
         elseif($this->_route[trim($dir, "/")]){
-            return $this->_route[trim($dir, "/")]["name"] . " >> " . "SITE_HEADER";
+            return $this->_route[trim($dir, "/")]["name"] . " >> " . $s_hdr;
         }
         else{
             return "_404";

@@ -103,7 +103,7 @@ class FoolCore extends Router {
         include_once $this->getContentPage(); //Выводим страницы сайта
         echo "</section>";
         switch ($this->numcols) {
-            case 2: include_once _TEMPLATE_DIR_ . "/sidebar.php";
+            case 2: include_once _TEMPLATE_DIR_ . "/" . _SIDEBAR_;
                     break;
             default:
                     break;
