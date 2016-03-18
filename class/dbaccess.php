@@ -63,8 +63,20 @@ final class FoolDB{
     }
 
     public function getAllRoutes(){
-        $res = $this->exQuery('SELECT id,parent_id,name,alias,template,_order,numcols FROM objects WHERE type=\'page\'
-                               ORDER BY parent_id, _order');
+        $res = $this->exQuery('SELECT o.id,
+                                      o.parent_id,
+                                      o.name,
+                                      om1.metadata alias,
+                                      om2.metadata template,
+                                      on1.value,
+                                      on2.value numcols
+                               FROM objects o
+                               LEFT JOIN obj_meta om1 ON (o.id=om1.obj_id AND om1.type=\'alias\')
+                               LEFT JOIN obj_meta om2 ON (o.id=om2.obj_id AND om2.type=\'template\')
+                               INNER JOIN obj_numdata on1 ON (o.id=on1.obj_id AND on1.type=\'order\')
+                               INNER JOIN obj_numdata on2 ON (o.id=on2.obj_id AND on2.type=\'colcount\')
+                               WHERE o.type=\'page\'
+                               ORDER BY o.parent_id, on1.value');
         return $res;
     }
 
