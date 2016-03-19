@@ -44,7 +44,7 @@ abstract class Router {
     private function setRoute($ar) {
         extract($ar);
         $uri =  trim($alias, "/");
-        if($pid > -1){
+        if($parent_id > -1){
             $uri = $this->findParent($parent_id) . "/" . $uri;
         }
         if(!$this->_route[$uri]){
@@ -106,7 +106,7 @@ abstract class Router {
             return 2;
         }
         elseif($this->_route[trim($dir, "/")]){
-            return $this->_route[trim($dir, "/")]["numcols"];
+            return $this->_route[trim($dir, "/")]["nc"];
         }
         else{
             return 1;

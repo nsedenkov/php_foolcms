@@ -4,6 +4,7 @@
  * @author FoolCMS
  */
 include_once "router.php";
+include_once "objman.php";
 
 class FoolCore extends Router {
 
@@ -114,7 +115,7 @@ class FoolCore extends Router {
     /**
      * Возвращает текст открытой страницы
      */
-    public function getContentPage() {
+    private function getContentPage() {
         $res = "templates/" . $this->_page_file . ".php";
         return $res;
     }

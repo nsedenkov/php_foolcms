@@ -7,7 +7,7 @@ class ObjRegistry {
     // Использование:
     // foreach (ObjRegistry::getInstance->get("post") as $postid) ...
     private static $instance = null;
-    private static $types = array("post", "plugin");
+    private static $types = array("post", "plugin", "widget");
     private $objects = array();
 
     private function __construct() {
@@ -22,11 +22,12 @@ class ObjRegistry {
     public static function getInstance(){
         if(empty(self::$instance)){
             self::$instance = new self();
+            self::$instance->fill();
         }
         return self::$instance;
     }
 
-    public function fill(){
+    private function fill(){
         foreach(self::$types as $type) {
             $res = FoolDB::getInstance()->getAllObjects($type);
             if ($res) {
@@ -66,12 +67,49 @@ abstract class FoolObject implements IObject {
 }
 
 class Plugin extends FoolObject {
+
     private function loadObject($id) {
 
     }
 }
 
+class Widget extends FoolObject {
+
+    private function loadObject($id) {
+        $res = FoolDB::getInstance()->getOneObject($id);
+        // res - массив с ключами name, dt_create, content
+        // или False, если id не существует
+        if ($res) {
+            return $this->formatString($res);
+        }
+        else {
+            return $res; // вернуть false в случае неудачи
+        }
+    }
+
+    private function formatString($obj) {
+        $open = "<div class=\"widget\">";
+        $close = "</div>";
+        $w_hdr = "";
+        $w_cnt = "";
+        if(array_key_exists("name", $obj)) {
+            $w_hdr = "<h3 class=\"w-title\">" . $obj["name"] . "</h3>";
+        }
+        if(array_key_exists("content", $obj)) {
+            $w_cnt = $obj["content"];
+        }
+        return $open . $w_hdr . $w_cnt . $close;
+    }
+
+    public function get($id) {
+        $res = false;
+        $res = $this->loadObject($id);
+        return $res;
+    }
+}
+
 class Post extends FoolObject {
+
     private function loadObject($id) {
         $res = FoolDB::getInstance()->getOneObject($id);
         // res - массив с ключами name, dt_create, content
