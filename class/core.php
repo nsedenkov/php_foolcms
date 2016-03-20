@@ -105,6 +105,7 @@ class FoolCore extends Router {
         echo "</section>";
         switch ($this->numcols) {
             case 2: include_once _TEMPLATE_DIR_ . "/" . _SIDEBAR_;
+                    echo "<div class=\"cf\"></div>";
                     break;
             default:
                     break;

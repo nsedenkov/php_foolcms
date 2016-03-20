@@ -3,12 +3,21 @@ padding: 0;
 margin: 0;
 }
 
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, img {
+    display: block;
+}
+
 .fright {
     float: right;
 }
 
 .fleft {
     float: left;
+}
+
+.cf {
+    width: 100%;
+    clear: both;
 }
 
 .m-left {
@@ -115,6 +124,7 @@ text-align:center;
 color:#FFF;
 text-decoration:none;
 text-transform:uppercase;
+font-weight: 600;
  }
 
  .fool-menu ul li a:hover {
@@ -195,6 +205,63 @@ color:#fff;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+}
+
+/*******************************
+ * Single, Mainfield, Mainaside
+ ******************************/
+.single {
+    width: 96%;
+    margin: auto;
+}
+
+.mainfield {
+    float: left;
+    width: 78%;
+}
+
+.mainaside {
+    float: right;
+    width: 20%;
+}
+
+.widget {
+    width: 96%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: solid 1px #53bd84;
+}
+
+.widget ul {
+    list-style-type: none;
+}
+
+.widget ul li {
+    margin: 10px 0;
+}
+
+.widget a {
+    text-decoration: none;
+    font-size: 12px;
+    color: #000;
+    margin: 0 10px;
+}
+
+.widget a:hover {
+    text-decoration: underline;
+}
+
+.w-title {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    background-color: #53bd84;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 /*******************************
