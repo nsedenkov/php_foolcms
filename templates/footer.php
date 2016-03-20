@@ -7,6 +7,8 @@
 <p>Powered by FoolCMS</p>
 </div>
 </footer>
+<script type='text/javascript' src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "js/jquery/jquery-1.11.3.min.js" . "\""?>></script>
+<script type='text/javascript' src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "js/jquery/jquery.validate.min.js" . "\""?>></script>
 <script type='text/javascript' src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "js/fool.js" . "\""?>></script>
 </body>
 </html>
