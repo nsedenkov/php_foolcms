@@ -111,5 +111,19 @@ final class FoolDB{
             return false;
         }
     }
+
+    public function saveNewMsg($in) {
+        // в случае успеха возвращает id новой записи в inbox
+        $res = -1;
+        extract($in);
+        $name = $this->mysqli->real_escape_string($name);
+        $subject = $this->mysqli->real_escape_string($subject);
+        $email = $this->mysqli->real_escape_string($email);
+        $message = $this->mysqli->real_escape_string($message);
+        if ($this->exQuery("INSERT INTO inbox(name,subject,email,message) VALUES (\"$name\",\"$subject\",\"$email\",\"$message\")")) {
+            $res = $this->mysqli->insert_id;
+        }
+        return $res;
+    }
 }
 ?>
