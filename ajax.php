@@ -14,6 +14,8 @@ if (defined("_ROOT_DIR_") && defined("_CLASS_DIR_") && file_exists(_ROOT_DIR_ . 
 }
 else { die("Critical Caraul::Cannot connect to DB"); }
 
+require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/mailsender.php"; //Подключаем БД
+
 switch ($action) {
     case 'new_qstn':
         $in = array (
@@ -23,10 +25,41 @@ switch ($action) {
             message => $_POST['message']
         );
         extract($in);
-        mail('sedenkoff@inbox.ru', $subject, $message, "From: $email");
+        $ownname = FoolDB::getInstance()->getOneGeneral("fool_author");
+        $ownhdr = FoolDB::getInstance()->getOneGeneral("fool_header");
+        $ownmail = FoolDB::getInstance()->getOneGeneral("fool_email");
+        $nrmail = "no-reply@sedenkov.xyz";
+        $encoding = "UTF-8";
         $res = array();
         $res['q_id'] = FoolDB::getInstance()->saveNewMsg($in);
-        if($res['q_id'] > -1) {
+        if ($res['q_id'] > -1) {
+            $subject .= " - from $ownhdr";
+            // отправляем сообщение себе
+            $mailres = MailSender::getInstance()->send(
+                                                        $name,
+                                                        $email,
+                                                        $ownname,
+                                                        $ownmail,
+                                                        $encoding,
+                                                        $encoding,
+                                                        $subject,
+                                                        $message
+                                                      );
+            // отправляем уведомление посетителю
+            $subject = "Сообщение на сайте $ownhdr";
+            $message = "Вы создали сообщение № " . $res['q_id'] . " на сайте $ownhdr";
+            $mailres = MailSender::getInstance()->send(
+                                                        $ownhdr,
+                                                        $nrmail,
+                                                        $name,
+                                                        $email,
+                                                        $encoding,
+                                                        $encoding,
+                                                        $subject,
+                                                        $message
+                                                      );
+        }
+        if($res['q_id'] > -1 && $mailres !== false) {
             $res['status'] = 'Ok';
         }
         else {

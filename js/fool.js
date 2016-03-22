@@ -62,10 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: 'ajax.php',
                 data: form_data,
                 success: function( resp ){
-                    $('#contact_form').trigger('reset');
                     var resar = JSON.parse(resp);
-                    $('#sendRes').append('<p>Спасибо! Вашему обращению присвоен №' + resar.q_id + '</p>');
                     console.log('AJAX status: ' + resar.status);
+                    if(resar.q_id > -1) {
+                        $('#contact_form').trigger('reset');
+                        $('#sendRes').append('<p>Спасибо! Вашему обращению присвоен №' + resar.q_id + '</p>');
+                    }
+                    else {
+                        $('#sendRes').append('<p>Что-то пошло не так</p>');
+                    }
                 },
                 error: function( xhr, status, errorThrown) {
                     console.log( 'ERROR: ' + errorThrown );
