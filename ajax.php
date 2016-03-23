@@ -14,7 +14,8 @@ if (defined("_ROOT_DIR_") && defined("_CLASS_DIR_") && file_exists(_ROOT_DIR_ . 
 }
 else { die("Critical Caraul::Cannot connect to DB"); }
 
-require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/mailsender.php"; //Подключаем БД
+require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/mailsender.php";
+require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/mailvalidator.php";
 
 switch ($action) {
     case 'new_qstn':
@@ -32,7 +33,8 @@ switch ($action) {
         $encoding = "UTF-8";
         $res = array();
         $res['q_id'] = FoolDB::getInstance()->saveNewMsg($in);
-        if ($res['q_id'] > -1) {
+        $m_val = new MailValidator($email);
+        if (($res['q_id'] > -1) && ($m_val->isValid() === true)) {
             $subject .= " - from $ownhdr";
             // отправляем сообщение себе
             $mailres = MailSender::getInstance()->send(
@@ -58,6 +60,9 @@ switch ($action) {
                                                         $subject,
                                                         $message
                                                       );
+        }
+        else {
+            $mailres = false;
         }
         if($res['q_id'] > -1 && $mailres !== false) {
             $res['status'] = 'Ok';

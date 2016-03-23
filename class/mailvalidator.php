@@ -5,24 +5,15 @@
 
 class MailValidator {
 
-    private static $instance; // контейнер экземпляра объекта
-    private static $pattern = '\b[\w\.-]+@([\w\.-]+\.\w{2,4})\b';
+    private $pattern = '{[\w.-]+@([\w.-]+.\w{2,4})}';
     private $email = null;
 
-    private function __construct() {
-
+    public function __construct($str) {
+        $this->email = $str;
     }
 
-    public static function getInstance($str){
-        if(empty(self::$instance)){
-            self::$instance = new self();
-            self::$instance->email = $str;
-        }
-        return self::$instance;
-    }
-
-    public function syntaxCheck() {
-        $res = preg_match(self::$pattern, $this->email);
+    public function isValid() {
+        $res = preg_match($this->pattern, $this->email);
         if ($res > 0) {
             return true;
         }
@@ -31,9 +22,9 @@ class MailValidator {
         }
     }
 
-    public function isExists() {
+    /*public function isExists() {
         $port = 25;
-        preg_match(self::$pattern, $this->email, $match);
+        preg_match($this->pattern, $this->email, $match);
         $domain = $match[2];
         $mx_recrds = dns_get_record($domain, DNS_MX);
         if (($socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) < 0) {
@@ -48,7 +39,7 @@ class MailValidator {
         $msg = "HELO ";
         socket_write($socket, $msg, strlen($msg));
         $out = socket_read($socket, 1024);
-    }
+    }*/
 
 }
 
