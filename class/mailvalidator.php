@@ -13,8 +13,8 @@ class MailValidator {
     }
 
     public function isValid() {
-        $res = preg_match($this->pattern, $this->email);
-        if ($res > 0) {
+        $res = preg_match($this->pattern, $this->email, $match);
+        if (($res > 0) && (strlen($match[0]) == strlen($this->email))) {
             return true;
         }
         else {
@@ -22,24 +22,40 @@ class MailValidator {
         }
     }
 
-    /*public function isExists() {
+    public function isExists() {
         $port = 25;
         preg_match($this->pattern, $this->email, $match);
-        $domain = $match[2];
-        $mx_recrds = dns_get_record($domain, DNS_MX);
+        $domain = $match[1];
         if (($socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) < 0) {
             return "Socket error";
         }
-        $result = socket_connect($socket, $domain, $port);
-        if ($result === false) {
-            return "Error connecting to socket";
-        } else {
-
+        $mx_records = dns_get_record($domain, DNS_MX);
+        if (count($mx_records) > 0) {
+            $result = socket_connect($socket, $mx_records[0]["target"], $port);
+            if ($result === false) {
+                return "Error connecting to socket";
+            } else {
+                $tmp = $this->email;
+                $msg = array();
+                $msg[] = "HELO $domain";
+                $msg[] = "MAIL FROM: test@test.ru";
+                $msg[] = "RCPT TO: $tmp";
+                for (i = 0; i < 3; i++) {
+                    socket_write($socket, $msg[i], strlen($msg[i]));
+                    $out = socket_read($socket, 1024);
+                }
+                if (strpos($out, "25") !== false) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
         }
-        $msg = "HELO ";
-        socket_write($socket, $msg, strlen($msg));
-        $out = socket_read($socket, 1024);
-    }*/
+        else {
+            return false;
+        }
+    }
 
 }
 

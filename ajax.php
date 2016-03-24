@@ -32,9 +32,9 @@ switch ($action) {
         $nrmail = "no-reply@sedenkov.xyz";
         $encoding = "UTF-8";
         $res = array();
-        $res['q_id'] = FoolDB::getInstance()->saveNewMsg($in);
         $m_val = new MailValidator($email);
-        if (($res['q_id'] > -1) && ($m_val->isValid() === true)) {
+        if ($m_val->isValid() === true) /*&& ($m_val->isExists() === true)*/ {
+            $res['q_id'] = FoolDB::getInstance()->saveNewMsg($in);
             $subject .= " - from $ownhdr";
             // отправляем сообщение себе
             $mailres = MailSender::getInstance()->send(
