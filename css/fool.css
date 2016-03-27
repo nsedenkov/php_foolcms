@@ -573,3 +573,15 @@ color:#fff;
     color: red;
     z-index: 999;
 }
+
+/*******************************************
+ * Resume
+ ******************************************/
+.resume {
+    margin-top: 10px;
+}
+
+.resume table tr td {
+    padding: 10px 5px 10px 10px;
+    vertical-align: top;
+}

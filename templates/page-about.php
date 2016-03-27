@@ -1,1 +1,5 @@
-<h2>Страница &quot;Обо мне&quot;</h2>
+<?php
+if (file_exists(_ROOT_DIR_ . "/" . _STATIC_DIR_ . "/resume.html")) {
+    include_once _ROOT_DIR_ . "/" . _STATIC_DIR_ . "/resume.html";
+}
+?>
