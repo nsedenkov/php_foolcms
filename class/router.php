@@ -1,4 +1,5 @@
 <?php
+namespace FoolCMS;
 
 include_once "dbaccess.php";
 /**
@@ -47,7 +48,7 @@ abstract class Router {
         if($parent_id > -1){
             $uri = $this->findParent($parent_id) . "/" . $uri;
         }
-        if(!$this->_route[$uri]){
+        if(!isset($this->_route[$uri])){
             $this->_route[$uri] = array ("file" => $template,
                                          "name" => $name,
                                          "id" => $id,

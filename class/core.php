@@ -1,4 +1,5 @@
 <?php
+namespace FoolCMS;
 /**
  * Дурацкий движок на PHP
  * @author FoolCMS
@@ -6,7 +7,7 @@
 include_once "router.php";
 include_once "objman.php";
 
-class FoolCore extends Router {
+class Core extends Router {
 
     // применяем паттерн Singleton
     private static $instance; // контейнер для экземпляра

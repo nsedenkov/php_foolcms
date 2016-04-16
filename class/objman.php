@@ -1,4 +1,5 @@
 <?php
+namespace FoolCMS;
 
 include_once "dbaccess.php";
 
@@ -59,7 +60,7 @@ interface IObject {
 abstract class FoolObject implements IObject {
     //Паттерн Фабрика
     public static function initial($type) {
-        $cname = ucfirst(strtolower($type));
+        $cname = __NAMESPACE__ . "\\" . ucfirst(strtolower($type));
         return new $cname();
     }
 

@@ -1,8 +1,8 @@
 <aside class="mainaside">
 <?php
-$widgets = ObjRegistry::get("widget");
+$widgets = \FoolCMS\ObjRegistry::get("widget");
 foreach ($widgets as $wid) {
-    echo FoolObject::initial("widget")->get($wid);
+    echo  \FoolCMS\FoolObject::initial("widget")->get($wid);
 }
 ?>
 </aside>

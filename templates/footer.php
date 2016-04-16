@@ -1,15 +1,15 @@
 </div><!-- wrapper -->
 <footer class="footer">
 <div class="copyright m-top m-bottom m-left">
-<p><strong>&copy; <?php FoolCore::getInstance()->outParam('fool_year');echo ", ";FoolCore::getInstance()->outParam('fool_author'); ?></strong></p>
+<p><strong>&copy; <?php \FoolCMS\Core::getInstance()->outParam('fool_year');echo ", ";\FoolCMS\Core::getInstance()->outParam('fool_author'); ?></strong></p>
 </div>
 <div class="fright m-top m-bottom m-right">
 <p>Powered by FoolCMS</p>
 </div>
 </footer>
-<script type='text/javascript' src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "js/jquery/jquery-1.11.3.min.js" . "\""?>></script>
-<script type='text/javascript' src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "js/jquery/jquery.validate.min.js" . "\""?>></script>
-<script type='text/javascript' src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "js/fool.js" . "\""?>></script>
+<script type='text/javascript' src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "js/jquery/jquery-1.11.3.min.js" . "\""?>></script>
+<script type='text/javascript' src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "js/jquery/jquery.validate.min.js" . "\""?>></script>
+<script type='text/javascript' src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "js/fool.js" . "\""?>></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {

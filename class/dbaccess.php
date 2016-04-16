@@ -1,4 +1,5 @@
 <?php
+namespace FoolCMS;
 /********************************
  * Класс для доступа к БД
  * Использует mysqli
@@ -15,7 +16,7 @@ final class FoolDB{
     private function __construct(){
         $json = file_get_contents('dbcfg.json');
         $dbp = json_decode($json, true);
-        $this->mysqli = new mysqli("localhost", $dbp['user'], $dbp['pswd'], $dbp['dbnm']);
+        $this->mysqli = new \mysqli("localhost", $dbp['user'], $dbp['pswd'], $dbp['dbnm']);
         if ($this->mysqli->connect_errno) {
             echo "Не удалось подключиться к MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error;
         }

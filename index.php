@@ -10,7 +10,7 @@ else { die("Critical Caraul::Cannot find includes file"); }
 
 if (defined("_ROOT_DIR_") && defined("_CLASS_DIR_") && file_exists(_ROOT_DIR_ . "/". _CLASS_DIR_ ."/core.php")) {
     require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/core.php"; //Подключаем ядро CMS
-    FoolCore::getInstance()->openSite();
+    \FoolCMS\Core::getInstance()->openSite();
 }
 else { die("Critical Caraul::Cannot initilize CMS core"); }
 ?>

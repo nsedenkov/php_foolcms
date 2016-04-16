@@ -2,9 +2,9 @@
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-        <title><?php FoolCore::getInstance()->outPageTitle(); ?></title>
+        <title><?php \FoolCMS\Core::getInstance()->outPageTitle(); ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <link rel="stylesheet" href=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "css/fool.css" . "\""?> type="text/css">
+        <link rel="stylesheet" href=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "css/fool.css" . "\""?> type="text/css">
     </head>
     <body>
     <div class="wrapper">
@@ -14,16 +14,16 @@
         <input type="radio" id="selector3" name="selector">
         <input type="radio" id="selector4" name="selector">
         <div class="item">
-            <img alt="" title="" src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "img/Slider-1.jpg" . "\""?>>
+            <img alt="" title="" src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "img/Slider-1.jpg" . "\""?>>
         </div>
         <div class="item">
-            <img alt="" title="" src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "img/Slider-2.jpg" . "\""?>>
+            <img alt="" title="" src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "img/Slider-2.jpg" . "\""?>>
         </div>
         <div class="item">
-            <img alt="" title="" src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "img/Slider-3.jpg" . "\""?>>
+            <img alt="" title="" src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "img/Slider-3.jpg" . "\""?>>
         </div>
         <div class="item">
-            <img alt="" title="" src=<?php echo "\""; FoolCore::getInstance()->outDomName(); echo "img/Slider-4.jpg" . "\""?>>
+            <img alt="" title="" src=<?php echo "\""; \FoolCMS\Core::getInstance()->outDomName(); echo "img/Slider-4.jpg" . "\""?>>
         </div>
         <div class="selector_list">
             <label for="selector1">1</label>
@@ -42,4 +42,4 @@
             </button>
         </div>
     </div>
-    <?php FoolCore::getInstance()->outMainMenu(); ?>
+    <?php \FoolCMS\Core::getInstance()->outMainMenu(); ?>
