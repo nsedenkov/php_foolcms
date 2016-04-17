@@ -9,10 +9,12 @@ if (file_exists("include/include.php")) {
 }
 else { die("Critical Caraul::Cannot find includes file"); }
 
-if (defined("_ROOT_DIR_") && defined("_CLASS_DIR_") && file_exists(_ROOT_DIR_ . "/". _CLASS_DIR_ ."/dbaccess.php")) {
-    require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/dbaccess.php"; //Подключаем БД
+if (defined("_ROOT_DIR_") && defined("_CLASS_DIR_") && file_exists(_ROOT_DIR_ . "/". _CLASS_DIR_ ."/FoolCMS/Dbaccess.php")) {
+    require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/FoolCMS/Dbaccess.php"; //Подключаем БД
 }
 else { die("Critical Caraul::Cannot connect to DB"); }
+
+use \FoolCMS\Dbaccess as DBA;
 
 require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/mailsender.php";
 require_once _ROOT_DIR_ . "/". _CLASS_DIR_ ."/mailvalidator.php";
@@ -26,18 +28,18 @@ switch ($action) {
             message => $_POST['message']
         );
         extract($in);
-        $ownname = FoolDB::getInstance()->getOneGeneral("fool_author");
-        $ownhdr = FoolDB::getInstance()->getOneGeneral("fool_header");
-        $ownmail = FoolDB::getInstance()->getOneGeneral("fool_email");
+        $ownname = DBA::getInstance()->getOneGeneral("fool_author");
+        $ownhdr = DBA::getInstance()->getOneGeneral("fool_header");
+        $ownmail = DBA::getInstance()->getOneGeneral("fool_email");
         $nrmail = "no-reply@sedenkov.xyz";
         $encoding = "UTF-8";
         $res = array();
-        $m_val = new MailValidator($email);
+        $m_val = new \MailValidator($email);
         if ($m_val->isValid() === true) /*&& ($m_val->isExists() === true)*/ {
-            $res['q_id'] = FoolDB::getInstance()->saveNewMsg($in);
+            $res['q_id'] = DBA::getInstance()->saveNewMsg($in);
             $subject .= " - from $ownhdr";
             // отправляем сообщение себе
-            $mailres = MailSender::getInstance()->send(
+            $mailres = \MailSender::getInstance()->send(
                                                         $name,
                                                         $email,
                                                         $ownname,
@@ -50,7 +52,7 @@ switch ($action) {
             // отправляем уведомление посетителю
             $subject = "Сообщение на сайте $ownhdr";
             $message = "Вы создали сообщение № " . $res['q_id'] . " на сайте $ownhdr";
-            $mailres = MailSender::getInstance()->send(
+            $mailres = \MailSender::getInstance()->send(
                                                         $ownhdr,
                                                         $nrmail,
                                                         $name,

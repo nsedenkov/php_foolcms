@@ -5,7 +5,7 @@ namespace FoolCMS;
  * Использует mysqli
  ********************************/
 
-final class FoolDB{
+final class Dbaccess {
 
     // Применяем паттерн Singleton
     private static $instance; // контейнер экземпляра объекта

@@ -4,8 +4,6 @@ namespace FoolCMS;
  * Дурацкий движок на PHP
  * @author FoolCMS
  */
-include_once "router.php";
-include_once "objman.php";
 
 class Core extends Router {
 

@@ -1,7 +1,7 @@
 <?php
 namespace FoolCMS;
 
-include_once "dbaccess.php";
+/*include_once "dbaccess.php";*/
 /**
  * Класс для обработки ЧПУ-запросов
  */
@@ -10,7 +10,7 @@ abstract class Router {
     private $_route = array(); //Переменная хранит маршруты, и файлы, которые будут открываться при определеном маршруте
 
     protected function __construct(){
-        $this->_fooldb = FoolDB::getInstance();
+        $this->_fooldb = Dbaccess::getInstance();
         $this->readRoutes();
     }
 
